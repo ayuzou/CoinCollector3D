@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-public class CameraController : MonoBehaviour
-{
+public class CameraController : MonoBehaviour {
     // To stop camera from falling player without rotating
 
     public GameObject player;
@@ -17,66 +16,54 @@ public class CameraController : MonoBehaviour
     private Vector3 dragOrigin;
 
     // Start is called before the first frame update
-    private void Start()
-    {
+    public void Start() {
         offset = transform.position - player.transform.position;
         standardVectForward = transform.forward;
 
-        if (GameObject.Find("FrontPos"))
-        {
+        if (GameObject.Find("FrontPos")) {
             frontPos = GameObject.Find("FrontPos").transform;
         }
 
-        if (GameObject.Find("JumpPos"))
-        {
+        if (GameObject.Find("JumpPos")) {
             backPos = GameObject.Find("JumpPos").transform;
         }
     }
 
-    private void Update()
-    {
+    public void Update() {
         float delta = Input.GetAxis("Mouse ScrollWheel");
 
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
+        if (Input.GetKey(KeyCode.LeftShift)) {
             // zoom
-            if (delta != 0.0f)
-            {
+            if (delta != 0.0f) {
                 MouseWheelEvent(delta);
             }
             // left click, drag camera
-            if (Input.GetMouseButton(0))
-            {
+            if (Input.GetMouseButton(0)) {
                 DragCamera();
-            } 
+            }
             // right click, free camera
-            if (Input.GetMouseButton(1))
-            {
+            if (Input.GetMouseButton(1)) {
                 FreeCamera();
             }
         }
         // front view
-        else if (Input.GetKey(KeyCode.LeftControl)) 
-        {
+        else if (Input.GetKey(KeyCode.LeftControl)) {
             print("frontview");
             DoFrontView();
         }
         // back view
-        else if (Input.GetKey(KeyCode.LeftAlt)) 
-        {
+        else if (Input.GetKey(KeyCode.LeftAlt)) {
             print("backview");
             DoBackView();
         }
         // normal view
-        else
-        {
+        else {
             print("normalview");
             DoNormalView();
         }
     }
 
-    private void MouseWheelEvent(float delta)
-    {
+    private void MouseWheelEvent(float delta) {
         Vector3 focusToPosition = transform.position;
 
         Vector3 post = focusToPosition * (1.0f + delta);
@@ -85,8 +72,7 @@ public class CameraController : MonoBehaviour
             transform.position = post;
     }
 
-    private void DragCamera()
-    {
+    private void DragCamera() {
         Camera.main.transform.position -= new Vector3(Input.GetAxis("Mouse X") * dragSpeed, 0, Input.GetAxis("Mouse Y") * dragSpeed);
     }
 
@@ -111,8 +97,7 @@ public class CameraController : MonoBehaviour
     //    transform.LookAt(player.position);
     //}
 
-    private void FreeCameraTest()
-    {
+    private void FreeCameraTest() {
         print("offset before DoNormalView: " + offset);
         DoNormalView();
 
@@ -128,28 +113,24 @@ public class CameraController : MonoBehaviour
     //      transform.LookAt(player.position);
 
 
-    private void FreeCamera()
-    {
+    private void FreeCamera() {
         Vector3 tempOffset = new Vector3(player.transform.position.x, player.transform.position.y + 8.0f, player.transform.position.z + 7.0f);
         Vector3 freeOffset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * dragSpeed, Vector3.up) * tempOffset;
         transform.position = player.transform.position + freeOffset;
         transform.LookAt(player.transform.position);
     }
 
-    private void DoFrontView()
-    {
+    private void DoFrontView() {
         transform.position = frontPos.position;
         transform.forward = frontPos.forward;
     }
 
-    private void DoBackView()
-    {
+    private void DoBackView() {
         transform.position = backPos.position;
         transform.forward = backPos.forward;
     }
 
-    private void DoNormalView()
-    {
+    private void DoNormalView() {
         transform.position = player.transform.position + offset;
         transform.forward = standardVectForward;
     }

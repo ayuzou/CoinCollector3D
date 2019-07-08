@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pick Up
   - Ground
+  - Hallway
   layers:
   - Default
   - TransparentFX

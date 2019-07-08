@@ -8,13 +8,11 @@ using UnityEngine;
  * Can use the prefab into any scene and all of the pickup objects will be updated with the changes
  */
 
-public class RotatorOld : MonoBehaviour
-{
+public class RotatorOld : MonoBehaviour {
     public float speed;
 
     // Update is called once per frame
-    private void Update()
-    {
+    private void Update() {
         // multiply by deltaTime to make the action smooth
         transform.Rotate(new Vector3(15, 30, 45) * speed * Time.deltaTime);
     }
